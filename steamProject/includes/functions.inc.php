@@ -113,7 +113,7 @@ function checkSession($id)
     }
 }
 
-function generateRandomID()
+function generateRandomID($length)
 {
     global $pdo;
 
@@ -126,7 +126,7 @@ function generateRandomID()
 
     do {
         $id = '';
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             $id .= mt_rand(0, 9);
         }
         var_dump($id);
@@ -135,12 +135,30 @@ function generateRandomID()
     return $id;
 }
 
+function validateAndOrStoreImage($image)
+{
+    global $pdo;
 
-function insertGame($title, $description, $genre, $price, $sessionId)
+    var_dump($image);
+    $allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
+    $detected_type = exif_imagetype($image["tmp_name"]);
+    if (!in_array($detected_type, $allowed_types)) {
+        return "Error: File is not an image.";
+    }
+
+    $image_path = "user-images/" . uniqid() . "-" . $image["name"];
+    move_uploaded_file($image["tmp_name"], $image_path);
+
+    return $image_path;
+}
+
+
+function insertGame($title, $description, $genre, $price, $sessionId, $image_validate)
 {
     global $pdo;
 
     $price = (float) $price;
+    $IDlength = 6;
 
     $statement = $pdo->prepare("SELECT title FROM gamesdb WHERE title = :title");
     $statement->execute(["title" => $title]);
@@ -151,23 +169,65 @@ function insertGame($title, $description, $genre, $price, $sessionId)
 
         $user = fetchUser($sessionId);
         if ($user !== false) {
-            $user_id = $user["id"];
-            $GameID = generateRandomID();
-            $statement = $pdo->prepare("INSERT INTO gamesdb(GameID, title, description, genre, price, fromUser) VALUES (:GameID, :title, :description, :genre, :price, :fromUser)");
-            $statement->execute(["GameID" => $GameID, "title" => $title, "description" => $description, "genre" => $genre, "price" => $price, "fromUser" => $user_id]);
-            header("location: /steamProject/upload.php?message=Thanks for uploading your game to steam!");
+            $path = validateAndOrStoreImage($image_validate);
+            if ($path != "Error: File is not an image.") {
+                $user_id = $user["id"];
+                $GameID = generateRandomID($IDlength);
+                $statement = $pdo->prepare("INSERT INTO gamesdb(GameID, title, description, genre, price, fromUser, path) VALUES (:GameID, :title, :description, :genre, :price, :fromUser, :path)");
+                $statement->execute(["GameID" => $GameID, "title" => $title, "description" => $description, "genre" => $genre, "price" => $price, "fromUser" => $user_id, "path" => $path]);
+                header("location: /steamProject/upload.php?message=Thanks for uploading your game to steam!");
+            } else {
+                header("location: /steamProject/upload.php?message=Wrong Image Type ");
 
+            }
         } else {
             header("location: /steamProject/upload.php?message=Unknown error. Please try refreshing your session");
         }
     }
 }
 
-
 function fetchGame()
 {
+    global $pdo;
 
+    $statement = $pdo->prepare("SELECT gameID FROM gamesdb");
+    $statement->execute();
+
+    $existing_gameIDs = $statement->fetchAll(PDO::FETCH_COLUMN);
+
+    // var_dump($existing_gameIDs);
+
+    foreach ($existing_gameIDs as $gameID) {
+        $statement = $pdo->prepare("SELECT * FROM gamesdb WHERE GameID = :GameID");
+        $statement->execute(["GameID" => $gameID]);
+
+        $game = $statement->fetch(PDO::FETCH_ASSOC);
+        // var_dump($game);
+
+        $gameID = $game["GameID"];
+        // $fromUser = $game["fromUser"];
+        $title = $game["title"];
+        // $description = $game["description"];
+        $price = $game["price"];
+        $gameIMG = $game["path"];
+        echo "
+        <div class='game-card' onclick='location.href=\"?message=store&page={$gameID}\"'>
+            <div class='game-card-image' style='background-image: url('{$gameIMG}'  )'></div>
+            <div class='game-card-info'>
+                <div class='game-card-title'>
+                    {$title}
+                </div>
+                <div class='game-card-price'>
+                    {$price}
+                </div>
+            </div>
+        </div>
+    ";
+    
+    }
 }
+
+
 
 function fetchUserLibrary()
 {

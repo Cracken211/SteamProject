@@ -194,31 +194,26 @@ header {
   background-color: #00a3ff;
 }
 
-.profileEdit-username {
-  /* Your custom styles for the username input */
-}
-
-.profileEdit-email {
-  /* Your custom styles for the email input */
-}
-
-.profileEdit-avatar {
-  /* Your custom styles for the avatar input */
-}
-
-.profileEdit-color {
-  /* Your custom styles for the color select */
-}
-
 
 /* profileEdit end  */
 
+.maiinnnn{
+  width: 100px;
+  height: 100px;
+  background-image: url("user-images/645159691ecce-store_img.png");
+  background-size: cover;
+}
 
 /* upload start */
 
 
-.upload-bodyContainer{
+.upload-bodyContainer {
   color: rgb(121, 161, 162);
+  padding-top: 20px;
+}
+
+.upload {
+  background-color: rgb(6, 191, 255);
 }
 
 .upload-form {
@@ -226,7 +221,7 @@ header {
   margin: 0 auto;
   background-color: #1b2838;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 5px; 
 }
 
 .upload-title {
@@ -236,6 +231,10 @@ header {
 
 .form-group {
   margin-bottom: 20px;
+}
+
+.form-group input, select, textarea {
+  color: white;
 }
 
 .upload-label {
@@ -269,7 +268,7 @@ textarea {
   width: 100%;
 }
 
-.upload-message{
+.upload-message {
   color: white;
 }
 
@@ -278,3 +277,126 @@ textarea {
 }
 
 /* upload end */
+
+/* store start  */
+
+.store-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+  width: 100vw;
+  background-image: url("img/store_img.png");
+  background-size: cover;
+}
+
+.store-search form {
+  background-color: #1b2238;
+
+  padding: 5px;
+  width: 1000px;
+  display: flex;
+}
+
+.store-catagory {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.store-sort {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.store-search input[type="text"],
+.store-search select {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: none;
+  background-color: #f2f2f2;
+  font-size: 14px;
+}
+
+.store-search select {
+  background-color: rgba(0, 119, 255, .7);
+}
+
+.store-search button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #0077ff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.store-search button:hover {
+  background-color: #0066cc;
+}
+
+/* store games start */
+
+.middle-game {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 80%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.game-card {
+  width: 280px;
+  height: 430px;
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #1b2838;
+  color: #fff;
+  cursor: pointer;
+}
+
+.game-card-image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.game-card-info {
+  padding: 10px;
+  text-align: left;
+}
+
+.game-card-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.game-card-price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 768px) {
+  .middle-game {
+    width: 100%;
+  }
+
+  .game-card {
+    width: 48%;
+    margin: 10px 1%;
+    height: auto;
+  }
+}
+
+
+/* store games end */
+
+/* store end  */

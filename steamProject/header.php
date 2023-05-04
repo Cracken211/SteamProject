@@ -34,7 +34,6 @@
 
         </form>
 
-
         <div class="logo">
 
             <form class="formLogo">

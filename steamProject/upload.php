@@ -15,7 +15,7 @@ include("header.php");
 
 <body>
     <div class="upload-bodyContainer">
-        <form class="upload-form" method="POST" action="includes/upload.inc.php">
+        <form class="upload-form" action="includes/upload.inc.php" method="post" enctype="multipart/form-data" >
             <h1 class="upload-title">Upload Your Game</h1>
             <?php
             if (isset($_GET['message'])) {
@@ -46,14 +46,17 @@ include("header.php");
             </div>
             <div class="form-group">
                 <label for="game_price" class="upload-label">Price:</label>
-                <input type="number" id="game_price" name="game_price" class="upload-input" required max="999"
-                    placeholder="Price in United States Dollar">
+                <input type="number" id="game_price" name="game_price" class="upload-input" required max="999.99" step="0.01"
+                    placeholder="Price in United States Dollar">    
             </div>
-            <div class="form-group">
-                <label for="game_image" class="upload-label">Image:</label>
-                <input type="file" id="game_image" name="game_image" class="upload-input">
+            <div class="form-group" >
+                <form action="includes/upload.inc.php" method="post" enctype="multipart/form-data">
+                    <label class="upload-label">Image:</label>
+                    <input type="file" id="game_image" name="game_image" class="upload-input"
+                        accept="image/png, image/jpeg, image/gif" maxlength="5000000" required>
+                </form>
+                <input type="submit" value="Upload Game" class="upload-button">
             </div>
-            <input type="submit" value="Upload Game" class="upload-button">
         </form>
     </div>
 </body>
