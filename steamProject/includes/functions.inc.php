@@ -7,6 +7,8 @@ session_start();
 //     exit;
 // }
 
+$currency = "$";
+
 function userCreate($username, $password, $email)
 {
     global $pdo;
@@ -139,14 +141,13 @@ function validateAndOrStoreImage($image)
 {
     global $pdo;
 
-    var_dump($image);
     $allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
     $detected_type = exif_imagetype($image["tmp_name"]);
     if (!in_array($detected_type, $allowed_types)) {
-        return "Error: File is not an image.";
+        return 1; // Not an image
     }
 
-    $image_path = "user-images/" . uniqid() . "-" . $image["name"];
+    $image_path = "../user-images/" . uniqid() . "-" . $image["name"];
     move_uploaded_file($image["tmp_name"], $image_path);
 
     return $image_path;
@@ -170,7 +171,8 @@ function insertGame($title, $description, $genre, $price, $sessionId, $image_val
         $user = fetchUser($sessionId);
         if ($user !== false) {
             $path = validateAndOrStoreImage($image_validate);
-            if ($path != "Error: File is not an image.") {
+            var_dump($path);
+            if ($path !== 1) {
                 $user_id = $user["id"];
                 $GameID = generateRandomID($IDlength);
                 $statement = $pdo->prepare("INSERT INTO gamesdb(GameID, title, description, genre, price, fromUser, path) VALUES (:GameID, :title, :description, :genre, :price, :fromUser, :path)");
@@ -186,50 +188,109 @@ function insertGame($title, $description, $genre, $price, $sessionId, $image_val
     }
 }
 
-function fetchGame()
+function fetchGame($category = "", $sortOrder = "")
 {
     global $pdo;
+    global $currency;
+
+    $category = strtolower($category);
 
     $statement = $pdo->prepare("SELECT gameID FROM gamesdb");
     $statement->execute();
 
     $existing_gameIDs = $statement->fetchAll(PDO::FETCH_COLUMN);
 
-    // var_dump($existing_gameIDs);
-
     foreach ($existing_gameIDs as $gameID) {
-        $statement = $pdo->prepare("SELECT * FROM gamesdb WHERE GameID = :GameID");
-        $statement->execute(["GameID" => $gameID]);
+
+        if (empty($category) && empty($sortOrder)) {
+            $statement = $pdo->prepare("SELECT * FROM gamesdb WHERE GameID = :GameID");
+            $statement->execute(["GameID" => $gameID]);
+        } else {
+            $statement = $pdo->prepare("SELECT * FROM gamesdb WHERE genre = :category ORDER BY price $sortOrder");
+            $statement->bindParam(":category", $category);
+            $statement->bindParam(":sortOrder", $sortOrder);
+            $statement->execute();
+        }
+
 
         $game = $statement->fetch(PDO::FETCH_ASSOC);
-        // var_dump($game);
 
         $gameID = $game["GameID"];
-        // $fromUser = $game["fromUser"];
         $title = $game["title"];
-        // $description = $game["description"];
         $price = $game["price"];
         $gameIMG = $game["path"];
-        echo "
-        <div class='game-card' onclick='location.href=\"?message=store&page={$gameID}\"'>
-            <div class='game-card-image' style='background-image: url('{$gameIMG}'  )'></div>
-            <div class='game-card-info'>
-                <div class='game-card-title'>
-                    {$title}
-                </div>
-                <div class='game-card-price'>
-                    {$price}
+        // <div class="game-card-image" style="background-image: url(\'steamProject/' . $gameIMG . '\')"></div>
+
+
+        echo '
+            <div class="game-card" onclick="location.href=\'?message=store&page=' . $gameID . '\'">
+             <div class="game-card-image" style="background-image: url(\'' . $gameIMG . '\')"></div>
+
+                <div class="game-card-info">
+                    <div class="game-card-title">
+                        ' . $title . '
+                    </div>
+                    <div class=\'game-card-price\'>
+                        ' . $price . '
+                    </div>
                 </div>
             </div>
-        </div>
-    ";
-    
+        ';
     }
 }
 
 
 
+
+function searchGame($searchQuery = "")
+{
+    global $pdo;
+    global $currency;
+
+    $searchCondition = "";
+
+    if (!empty($searchQuery)) {
+        $searchCondition = "AND title LIKE :searchQuery";
+        $searchQuery = "%$searchQuery%";
+    } else {
+        echo "<script>alert('Invalid search query')</script>";
+        exit();
+    }
+
+    $statement = $pdo->prepare("SELECT * FROM gamesdb WHERE 1 $searchCondition ORDER BY GameID ASC");
+    $statement->bindParam(":searchQuery", $searchQuery);
+    $statement->execute();
+
+    $games = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($games as $game) {
+        $gameID = $game["GameID"];
+        $title = $game["title"];
+        $price = $game["price"];
+        $gameIMG = $game["path"];
+
+        echo '
+            <div class="game-card" onclick="location.href=\'?message=store&page=' . $gameID . '\'">
+             <div class="game-card-image" style="background-image: url(\'' . $gameIMG . '\')"></div>
+                <div class="game-card-info">
+                    <div class="game-card-title">
+                        ' . $title . '
+                    </div>
+                    <div class=\'game-card-price\'>
+                        ' . $price . '
+                    </div>
+                </div>
+            </div>
+        ';
+    }
+}
+
 function fetchUserLibrary()
+{
+
+}
+
+function sortBy()
 {
 
 }

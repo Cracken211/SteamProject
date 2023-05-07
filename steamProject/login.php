@@ -12,7 +12,8 @@ include("header.php");
             <form action="includes/login.inc.php" method="POST">
                 <label for="username">Login</label>
                 <input class="login-input" type="text" placeholder="email" name="email" required="True">
-                <input class="login-input" type="password" placeholder="password" name="pass" required="true" maxlength="30">
+                <input class="login-input" type="password" placeholder="password" name="pass" required="true"
+                    maxlength="30">
 
                 <input class="login-submit" type="submit" name="submit" value="SIGN IN">
                 <?php
@@ -23,5 +24,5 @@ include("header.php");
                 ?>
             </form>
         </div>
-    </div>  
+    </div>
 </body>

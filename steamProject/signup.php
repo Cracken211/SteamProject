@@ -10,8 +10,10 @@ include("header.php");
                 <label for="username">Sign Up</label>
                 <input class="login-input" type="text" placeholder="username" name="uid" required="True" maxlength="20">
                 <input class="login-input" type="text" placeholder="email" name="email" required="True">
-                <input class="login-input" type="password" placeholder="password" name="pass" required="true" maxlength="30">
-                <input class="login-input" type="password" placeholder="repeat password" name="passrepeat" required="true" maxlength="30">
+                <input class="login-input" type="password" placeholder="password" name="pass" required="true"
+                    maxlength="30">
+                <input class="login-input" type="password" placeholder="repeat password" name="passrepeat"
+                    required="true" maxlength="30">
 
                 <input class="login-submit" type="submit" name="submit" value="SIGN UP">
 
