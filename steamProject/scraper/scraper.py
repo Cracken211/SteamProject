@@ -30,7 +30,6 @@ results = soup.find(id="search_resultsRows")
 data = results.find_all(["div", "a"], {"class": ["search_result_row"]})
 
 
-
 counter_length = 40
 counter = 0
 
@@ -95,9 +94,6 @@ for tag in data:
         break
                     
     # GameID , fromUser, title 1, description 1, genre 1, price 1, (date), path 1
-
-    
-
 
 
 db.close()

@@ -20,9 +20,9 @@
             // checkSession($_SESSION["uid"]);
             if (isset($_SESSION["uid"])) {
                 if (isset($_GET["message"]) && $_GET["message"] === "profile") {
-                    echo '<a href="profileEdit.php?message=edit">Edit Profile</a>';
+                    echo '<a href="profileEdit.php?page=edit">Edit Profile</a>';
                 } else {
-                    echo '<a href="profile.php?message=profile">Profile</a>';
+                    echo '<a href="profile.php?page=profile">Profile</a>';
                 }
                 echo '<a href="includes/signout.inc.php">Sign out</a>';
             } else {
@@ -44,12 +44,12 @@
             </form>
 
             <form class="links-logo" action="" method="POST">
-                <a href="store.php?message=store">Store</a>
-                <a href="community.php?message=community">Community</a>
-                <a href="library.php?message=library">library</a>
-                <a href="support.php?message=support">Support</a>
+                <a href="store.php?page=store">Store</a>
+                <a href="community.php?page=community">Community</a>
+                <a href="library.php?page=library">library</a>
+                <a href="support.php?page=support">Support</a>
                 <?php
-                if (isset($_GET["message"]) && $_GET["message"] == "store")
+                if (isset($_GET["page"]) && $_GET["page"] == "store")
                     echo "<a href='upload.php' class='upload'>Upload Game!</a>"
                         ?>
                 </form>

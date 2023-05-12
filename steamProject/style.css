@@ -27,6 +27,7 @@ header {
 .headerContainer {
   background-color: rgb(23, 26, 33);
   padding: 20px;
+  z-index: 100;
 }
 
 .links-logo {
@@ -164,13 +165,14 @@ header {
 .profileEdit-container label {
   display: block;
   margin-bottom: 10px;
+  color: black;
 }
 
 .profileEdit-container input[type="text"],
-.profileEdit-container input[type="email"],
 .profileEdit-container input[type="file"],
 .profileEdit-container select {
   width: 100%;
+  color: black;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -329,6 +331,7 @@ textarea {
   color: #fff;
   font-size: 14px;
   cursor: pointer;
+  
 }
 
 .store-search button:hover {
@@ -345,6 +348,11 @@ textarea {
   width: 80%;
   max-width: 100%;
   margin: 0 auto;
+  background-size: auto;
+}
+
+.games{
+  background-color: rgb(23, 26, 33);
 }
 
 .game-card {

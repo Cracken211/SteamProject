@@ -1,11 +1,9 @@
 <?php
 require("functions.inc.php");
 
-if(themeChange($_POST["theme"]) != false){
-    header("location: http://localhost:8080/steamProject/profileEdit.php?message=Edit Success");
-    echo $_GET["message"];
+if(!themeChange($_POST["theme"])){
+    header("location: /steamProject/profileEdit.php?message=Edit Success");
 } else {
-    header("location: http://localhost:8080/steamProject/profileEdit.php?message=Edit Failed");
-    echo $_GET["message"];
+    header("location: /steamProject/profileEdit.php?message=Edit Failed");
 }
 ?>
