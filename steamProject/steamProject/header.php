@@ -38,8 +38,9 @@
 
             <form class="formLogo">
                 <a href="index.php" name="page" class="steam-logo-btn">
-                    <img src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
-                        alt="Steam logo">
+                    <p> Beam LLC </p>
+                   // <img src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
+                        //alt="Steam logo">
                 </a>
             </form>
 
@@ -49,7 +50,7 @@
                 <a href="library.php?page=library">library</a>
                 <a href="support.php?page=support">Support</a>
                 <?php
-                if (isset($_GET["page"]) && $_GET["page"] == "store")
+                if (isset($_GET["page"]) && $_GET["page"] == "store") // Upload game button if web page is equal to page
                     echo "<a href='upload.php' class='upload'>Upload Game!</a>"
                         ?>
                 </form>
