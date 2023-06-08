@@ -2,14 +2,13 @@
 require_once("./includes/functions.inc.php");
 include("header.php");
 
-function searchGame($searchQuery = "")
+function searchGame($searchQuery = "") // function to search game
 {
     global $pdo;
-    global $currency;
 
     $searchCondition = "";
 
-    if (!empty($searchQuery)) {
+    if (!empty($searchQuery)) { // if not emtpy seach under the users condition. For example “Rust”, “st” or “Ru” will both return the game Rust
         $searchCondition = "AND title LIKE :searchQuery";
         $searchQuery = "%$searchQuery%";
     } else {
