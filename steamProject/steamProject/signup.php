@@ -18,7 +18,7 @@ include("header.php");
                 <input class="login-submit" type="submit" name="submit" value="SIGN UP">
 
                 <?php
-                if (isset($_GET['message'])) {
+                if (isset($_GET['message'])) { // Check if message isset as a GET request and if true display message to user 
                     $message = $_GET['message'];
                     echo "<p>$message</p>";
                 }
