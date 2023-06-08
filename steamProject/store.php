@@ -96,6 +96,7 @@ if (!isset($_GET["g"])) {
         $searchQuery = $_GET["search-query"] ?? "";
         searchGame($searchQuery); // Function call for user search
     } else if (isset($_GET["category"]) || isset($_GET["sort"])) {
+        // Store values in variables
         $category = $_GET["category"] ?? "";
         $sort = $_GET["sort"] ?? "";
         fetchGame($category, $sort, null); // Fetch game from user search request
@@ -214,18 +215,20 @@ if (!isset($_GET["g"])) {
     $statement->bindParam(":gameID", $gameID);
     $statement->execute();
 
-    $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $comments = $statement->fetchAll(PDO::FETCH_ASSOC); // Fetch data from row
 
     echo '
     <div class="comments-section">
         <h2>Comments</h2>';
 
-    foreach ($comments as $comment) { // 
+    foreach ($comments as $comment) { // Loop through each comment under the is of the GAME
+        // Sort and store values such as username and unix timestamp
         $username = $user["username"];
         $timestamp = $comment["unixTimestamp"];
         $formattedTimestamp = formatTimestamp($timestamp);
         $commentText = $comment["comment"];
-
+        
+        // Output it to the user
         echo '
         <div class="comment">
             <p class="username">' . $username . '</p>
