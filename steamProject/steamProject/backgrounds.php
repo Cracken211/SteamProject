@@ -1,4 +1,6 @@
 <?php
+
+// Backgrounds stored in an arrayfor user to choose from
 $backgrounds = [
   "gradient" => ['        
 <div class="bg">
