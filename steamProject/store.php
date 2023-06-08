@@ -2,7 +2,7 @@
 require_once("./includes/functions.inc.php");
 include("header.php");
 
-if (!isset($_GET["g"])) {
+if (!isset($_GET["g"])) { // Checks the GET to find out what game id is set. Gamid later used for fetching the game in database
 
     ?>
     <div class="store-search" image>
@@ -31,16 +31,16 @@ if (!isset($_GET["g"])) {
     <body class="games">
         <div class="middle-game">
             <?php
-            if (isset($_GET["search-query"])) {
-                $searchQuery = $_GET["search-query"] ?? "";
-                searchGame($searchQuery);
-            } else if (isset($_GET["category"]) || isset($_GET["sort"])) {
-                $category = $_GET["category"] ?? "";
+            if (isset($_GET["search-query"])) { // Check search query isset from input by use using a GET request. later used to search and sort database for game searched by user.
+                $searchQuery = $_GET["search-query"] ?? ""; // stored query in variable
+                searchGame($searchQuery); // Serches game using custom function
+            } else if (isset($_GET["category"]) || isset($_GET["sort"])) { // Checks sorting mode
+                $category = $_GET["category"] ?? ""; 
                 $sort = $_GET["sort"] ?? "";
 
-                fetchGame($category, $sort, null);
+                fetchGame($category, $sort, null); // Fetches games with two arguments
             } else {
-                fetchGame(null, null, null);
+                fetchGame(null, null, null); // if !isset then empty arguments and fetches game without requirements. 
             }
             ?>
         </div>
@@ -49,8 +49,8 @@ if (!isset($_GET["g"])) {
 
 
 } else {
-    $gameID = $_GET["g"];
-    $gameInfo = fetchGame(null, null, $gameID);
+    $gameID = $_GET["g"]; // Store game id in variable
+    $gameInfo = fetchGame(null, null, $gameID); // Stores all game info in variable. Price, title, description, etc.
     $user = fetchUser($gameInfo["fromUser"]);
     echo '<style>
 
@@ -105,7 +105,7 @@ if (!isset($_GET["g"])) {
     }
 
 </style>
-<div class="gameID-page">
+<div class="gameID-page"> // echos game card with all info fetched earlier 
 
     <div class="imageInfo-container">
         <div class="image"></div>
