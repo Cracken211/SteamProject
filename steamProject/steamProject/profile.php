@@ -5,11 +5,11 @@ include("header.php");
 
 checkSession($_SESSION["uid"]);
 
-function fetchTheme($id)
+function fetchTheme($id) // Declare function that attempts to fetch user profile using session ID
 {
     global $pdo;
 
-    $statement = $pdo->prepare("SELECT theme FROM user WHERE id = :id");
+    $statement = $pdo->prepare("SELECT theme FROM user WHERE id = :id"); // SQL statement to fetch user using session id
     $statement->execute(["id" => $id]);
 
     $row = $statement->fetch(PDO::FETCH_ASSOC);
