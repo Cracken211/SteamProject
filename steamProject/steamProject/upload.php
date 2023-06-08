@@ -18,7 +18,7 @@ include("header.php");
         <form class="upload-form" action="includes/upload.inc.php" method="post" enctype="multipart/form-data">
             <h1 class="upload-title">Upload Your Game</h1>
             <?php
-            if (isset($_GET['message'])) {
+            if (isset($_GET['message'])) { // Check if message is set, if true print the message in paragraph
                 $message = $_GET['message'];
                 echo "<p class='upload-message'>$message</p>";
             }
