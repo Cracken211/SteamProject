@@ -14,7 +14,7 @@ include("header.php");
 
                 <input class="login-submit" type="submit" name="submit" value="SIGN IN">
                 <?php
-                if (isset($_GET['message'])) {
+                if (isset($_GET['message'])) { // Checks message and if true grabs that message and displays it for that user 
                     $message = $_GET['message'];
                     echo "<p>$message</p>";
                 }
