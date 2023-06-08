@@ -1,4 +1,6 @@
 <?php
+
+// Style for backgrounds 
 $backgrounds = [
 "gradient" => ['        
 <div class="bg">
