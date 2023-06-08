@@ -12,17 +12,18 @@ function searchGame($searchQuery = "") // function to search game
         $searchCondition = "AND title LIKE :searchQuery";
         $searchQuery = "%$searchQuery%";
     } else {
-        echo "<script>alert('Invalid search query')</script>";
+        echo "<script>alert('Invalid search query')</script>"; // alert the user that query is empty
         exit();
     }
 
-    $statement = $pdo->prepare("SELECT * FROM gamesdb WHERE 1 $searchCondition ORDER BY GameID ASC");
+    $statement = $pdo->prepare("SELECT * FROM gamesdb WHERE 1 $searchCondition ORDER BY GameID ASC"); // fetch game under searxh condition
     $statement->bindParam(":searchQuery", $searchQuery);
     $statement->execute();
 
-    $games = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $games = $statement->fetchAll(PDO::FETCH_ASSOC); // Fetch row
 
-    foreach ($games as $game) {
+    foreach ($games as $game) { // run through each row 
+        // Sort and store in variables in case of later use 
         $gameID = $game["GameID"];
         $title = $game["title"];
         $price = $game["price"];
@@ -44,7 +45,7 @@ function searchGame($searchQuery = "") // function to search game
     }
 }
 
-function formatTimestamp($timestamp) {
+function formatTimestamp($timestamp) { // convert unix to timestamp. For example “Posted 4s ago”
     $currentTime = time();
     $elapsedTime = $currentTime - $timestamp;
 
@@ -62,7 +63,7 @@ function formatTimestamp($timestamp) {
     }
 }
 
-if (!isset($_GET["g"])) {
+if (!isset($_GET["g"])) { 
     echo '
     <div class="store-search" image>
         <form action="store.php?page=store" method="GET">
@@ -93,13 +94,13 @@ if (!isset($_GET["g"])) {
 
     if (isset($_GET["search-query"])) {
         $searchQuery = $_GET["search-query"] ?? "";
-        searchGame($searchQuery);
+        searchGame($searchQuery); // Function call for user search
     } else if (isset($_GET["category"]) || isset($_GET["sort"])) {
         $category = $_GET["category"] ?? "";
         $sort = $_GET["sort"] ?? "";
-        fetchGame($category, $sort, null);
+        fetchGame($category, $sort, null); // Fetch game from user search request
     } else {
-        fetchGame(null, null, null);
+        fetchGame(null, null, null); // if empty leave null
     }
 
     echo '
@@ -108,8 +109,8 @@ if (!isset($_GET["g"])) {
     ';
 } else {
     $gameID = $_GET["g"];
-    $gameInfo = fetchGame(null, null, $gameID);
-    $user = fetchUser($gameInfo["fromUser"]);
+    $gameInfo = fetchGame(null, null, $gameID); // fetch game 
+    $user = fetchUser($gameInfo["fromUser"]); // fetch username of creator of game
     echo '
     <style>
         .gameID-page {
@@ -209,7 +210,7 @@ if (!isset($_GET["g"])) {
     echo '</form>';
 
     // Fetch comments for the game
-    $statement = $pdo->prepare("SELECT * FROM gameComments WHERE gameid = :gameID ORDER BY unixTimestamp DESC");
+    $statement = $pdo->prepare("SELECT * FROM gameComments WHERE gameid = :gameID ORDER BY unixTimestamp DESC"); // fetch comments under game using gameid to sort and store game
     $statement->bindParam(":gameID", $gameID);
     $statement->execute();
 
@@ -219,7 +220,7 @@ if (!isset($_GET["g"])) {
     <div class="comments-section">
         <h2>Comments</h2>';
 
-    foreach ($comments as $comment) {
+    foreach ($comments as $comment) { // 
         $username = $user["username"];
         $timestamp = $comment["unixTimestamp"];
         $formattedTimestamp = formatTimestamp($timestamp);
