@@ -18,7 +18,7 @@
             <?php
             include_once("./includes/functions.inc.php");
             // checkSession($_SESSION["uid"]);
-            if (isset($_SESSION["uid"])) {
+            if (isset($_SESSION["uid"])) { // checks session id for later decision in displayed buttons. For example if use is set log out pops up rather than login
                 if (isset($_GET["message"]) && $_GET["message"] === "profile") {
                     echo '<a href="profileEdit.php?page=edit">Edit Profile</a>';
                 } else {
@@ -48,7 +48,7 @@
                 <a href="library.php?page=library">library</a>
                 <a href="support.php?page=support">Support</a>
                 <?php
-                if (isset($_GET["page"]) && $_GET["page"] == "store")
+                if (isset($_GET["page"]) && $_GET["page"] == "store") // echos upload game button if page = store
                     echo "<a href='upload.php' class='upload'>Upload Game!</a>"
                         ?>
                 </form>
