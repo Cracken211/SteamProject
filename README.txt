@@ -1,5 +1,5 @@
 =============================================
-          STEAM PROJECT - README
+          Beam LLC PROJECT - README
 =============================================
 
 Disclaimer:
