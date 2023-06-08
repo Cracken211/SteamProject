@@ -12,13 +12,13 @@ function fetchTheme($id) // Declare function that attempts to fetch user profile
     $statement = $pdo->prepare("SELECT theme FROM user WHERE id = :id"); // SQL statement to fetch user using session id
     $statement->execute(["id" => $id]);
 
-    $row = $statement->fetch(PDO::FETCH_ASSOC);
+    $row = $statement->fetch(PDO::FETCH_ASSOC); // fetch row of user. 
 
     if (!$row) {
         return false;
     } else {
         // $theme = $gradient[$row["theme"]];
-        return $row["theme"];
+        return $row["theme"]; // return theme from fetched row
     }
 }
 ?>
