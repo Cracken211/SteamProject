@@ -24,10 +24,8 @@ checkSession($_SESSION["uid"]);
 
     <div class="background-container-profile">
         <?php
-        $theme = fetchTheme($_SESSION["uid"]);
-        echo implode(",", $backgrounds[$theme]);
-
-
+        $theme = fetchTheme($_SESSION["uid"]); // Grabs session id and searches database for the theme of the user 
+        echo implode(",", $backgrounds[$theme]); 
 
         ?>
     </div>
