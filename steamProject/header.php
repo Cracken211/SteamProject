@@ -39,8 +39,8 @@
             <form class="formLogo">
                 <a href="index.php" name="page" class="steam-logo-btn">
                     <p> Beam LLC </p>
-                   // <img src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
-                        //alt="Steam logo">
+<!--                    // <img src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
+                        //alt="Steam logo"> -->
                 </a>
             </form>
 
