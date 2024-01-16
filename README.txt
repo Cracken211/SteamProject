@@ -30,6 +30,6 @@ As this project is solely for personal educational purposes, contributions are n
 Contact:
 ---------
 
-If you have any questions or concerns regarding this project, please feel free to contact the project creator at [your-email@example.com].
+If you have any questions or concerns regarding this project, please feel free to contact the project creator at.
 
 =============================================
